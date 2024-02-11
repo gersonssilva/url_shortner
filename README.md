@@ -40,7 +40,7 @@ You can also run the application using `mix`. To do so, be sure to have the nece
 Then, you can start the application by running the following command:
 
 ```bash
-export $(cat .env | xargs) && iex -S mix phx.server
+make server
 ```
 
 **Tip:** You can use docker compose to start just the necessary dependencies (e.g. Postgres) and then run the application using `mix`:
@@ -49,5 +49,5 @@ export $(cat .env | xargs) && iex -S mix phx.server
 ```bash
 docker compose up -d db
 
-export $(cat .env | xargs) && iex -S mix phx.server
+make server
 ```

@@ -3,6 +3,8 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
+.PHONY: console server test
+
 console:
 	iex -S mix
 

@@ -23,11 +23,24 @@ defmodule UrlShortner.ShortnedUrls do
     Ecto.Query.CastError -> {:error, :not_found}
   end
 
-  @spec get_shortned_url_by_slug(String.t()) :: ShortnedUrl.t() | {:error, :not_found}
-  def get_shortned_url_by_slug(slug) do
-    case Repo.get_by(ShortnedUrl, slug: slug) do
-      nil -> {:error, :not_found}
-      shortned_url -> shortned_url
+  @doc """
+  Get the original URL for a given slug.
+  """
+  @spec get_original_url(String.t()) :: String.t() | nil
+  def get_original_url(slug) do
+    result =
+      Cachex.fetch(:shortned_urls, slug, fn slug ->
+        case Repo.get_by(ShortnedUrl, slug: slug) do
+          nil -> {:ignore, nil}
+          shortned_url -> {:commit, shortned_url.original_url}
+        end
+      end)
+
+    case result do
+      {:ignore, nil} -> nil
+      {:ok, original_url} -> original_url
+      {:commit, original_url} -> original_url
+      original_url -> original_url
     end
   end
 end

@@ -1,5 +1,6 @@
 defmodule UrlShortnerWeb.ShortnedUrlControllerTest do
   use UrlShortnerWeb.ConnCase
+  use UrlShortner.CacheCase
 
   import UrlShortner.Factory
 

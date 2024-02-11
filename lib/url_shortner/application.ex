@@ -14,9 +14,7 @@ defmodule UrlShortner.Application do
       {Phoenix.PubSub, name: UrlShortner.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: UrlShortner.Finch},
-      # Start a worker by calling: UrlShortner.Worker.start_link(arg)
-      # {UrlShortner.Worker, arg},
-      # Start to serve requests, typically the last entry
+      shortned_urls_cache(),
       UrlShortnerWeb.Endpoint
     ]
 
@@ -32,5 +30,12 @@ defmodule UrlShortner.Application do
   def config_change(changed, _new, removed) do
     UrlShortnerWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp shortned_urls_cache do
+    {
+      Cachex,
+      name: :shortned_urls, limit: String.to_integer(System.get_env("CACHE_SIZE") || "1000")
+    }
   end
 end

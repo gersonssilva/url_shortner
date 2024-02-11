@@ -1,5 +1,6 @@
 defmodule UrlShortner.ShortnedUrlsTest do
   use UrlShortner.DataCase
+  use UrlShortner.CacheCase
 
   import UrlShortner.Factory
 
@@ -39,16 +40,16 @@ defmodule UrlShortner.ShortnedUrlsTest do
     end
   end
 
-  describe "get_shortned_url_by_slug/1" do
-    test "returns a shortned url" do
+  describe "get_original_url/1" do
+    test "returns the associated original url" do
       shortned_url = insert!(:shortned_url)
 
-      assert shortned_url = UrlShortner.ShortnedUrls.get_shortned_url_by_slug(shortned_url.slug)
-      assert shortned_url.id == shortned_url.id
+      assert original_url = UrlShortner.ShortnedUrls.get_original_url(shortned_url.slug)
+      assert original_url == shortned_url.original_url
     end
 
-    test "returns an error when shortned url is not found" do
-      assert {:error, :not_found} = UrlShortner.ShortnedUrls.get_shortned_url_by_slug("not-found")
+    test "returns nil when the original url is not found" do
+      assert nil == UrlShortner.ShortnedUrls.get_original_url("not-found")
     end
   end
 end

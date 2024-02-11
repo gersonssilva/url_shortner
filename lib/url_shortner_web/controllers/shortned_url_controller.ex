@@ -37,17 +37,17 @@ defmodule UrlShortnerWeb.ShortnedUrlController do
   end
 
   def redirection(conn, %{"slug" => slug}) do
-    case ShortnedUrls.get_shortned_url_by_slug(slug) do
-      {:error, :not_found} ->
+    case ShortnedUrls.get_original_url(slug) do
+      nil ->
         conn
         |> put_view(UrlShortnerWeb.ErrorHTML)
         |> put_status(:not_found)
         |> render("404.html")
 
-      shortned_url ->
+      original_url ->
         conn
         |> put_status(:moved_permanently)
-        |> redirect(external: shortned_url.original_url)
+        |> redirect(external: original_url)
     end
   end
 end

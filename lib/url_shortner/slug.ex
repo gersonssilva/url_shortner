@@ -1,4 +1,8 @@
 defmodule UrlShortner.Slug do
+  @moduledoc """
+  Module for generating slugs.
+  """
+
   @slug_size_bytes 8
 
   @doc """

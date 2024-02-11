@@ -10,20 +10,13 @@ defmodule UrlShortnerWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", UrlShortnerWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", ShortnedUrlController, :new
+    get "/shortned_urls/:id", ShortnedUrlController, :show
+    post "/shortned_urls", ShortnedUrlController, :create
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", UrlShortnerWeb do
-  #   pipe_through :api
-  # end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:url_shortner, :dev_routes) do

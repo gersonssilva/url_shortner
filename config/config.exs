@@ -16,7 +16,7 @@ config :url_shortner, UrlShortnerWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: UrlShortnerWeb.ErrorHTML, json: UrlShortnerWeb.ErrorJSON],
+    formats: [html: UrlShortnerWeb.ErrorHTML],
     layout: false
   ],
   pubsub_server: UrlShortner.PubSub,

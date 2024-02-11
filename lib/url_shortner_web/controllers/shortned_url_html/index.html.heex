@@ -1,0 +1,16 @@
+<.header>
+  Shortned URL
+  <:actions>
+    <.link href={~p"/shortned_urls/new"}>
+      <.button>New Shortned URL</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="shortned_url"
+  rows={@shortned_url_collection}
+  row_click={&JS.navigate(~p"/shortned_urls/#{&1}")}
+>
+  <:col :let={shortned_url} label="Original URL"><%= shortned_url.original_url %></:col>
+</.table>

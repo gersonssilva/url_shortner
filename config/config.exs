@@ -22,6 +22,8 @@ config :url_shortner, UrlShortnerWeb.Endpoint,
   pubsub_server: UrlShortner.PubSub,
   live_view: [signing_salt: "nQMA9BKd"]
 
+config :url_shortner, UrlShortner.Repo, migration_primary_key: [name: :id, type: :binary_id]
+
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails

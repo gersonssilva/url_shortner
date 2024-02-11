@@ -5,11 +5,11 @@ defmodule UrlShortnerWeb.ErrorHTMLTest do
   import Phoenix.Template
 
   test "renders 404.html" do
-    assert render_to_string(UrlShortnerWeb.ErrorHTML, "404", "html", []) == "Page Not Found"
+    assert render_to_string(UrlShortnerWeb.ErrorHTML, "404", "html", []) == "Page Not Found\n"
   end
 
   test "renders 500.html" do
     assert render_to_string(UrlShortnerWeb.ErrorHTML, "500", "html", []) ==
-             "Internal Server Error"
+             "Internal Server Error\n"
   end
 end

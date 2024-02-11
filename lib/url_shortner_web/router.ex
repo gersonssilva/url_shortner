@@ -16,6 +16,8 @@ defmodule UrlShortnerWeb.Router do
     get "/", ShortnedUrlController, :new
     get "/shortned_urls/:id", ShortnedUrlController, :show
     post "/shortned_urls", ShortnedUrlController, :create
+
+    get "/:slug", ShortnedUrlController, :redirection, as: :redirection_url
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

@@ -22,4 +22,12 @@ defmodule UrlShortner.ShortnedUrls do
   rescue
     Ecto.Query.CastError -> {:error, :not_found}
   end
+
+  @spec get_shortned_url_by_slug(String.t()) :: ShortnedUrl.t() | {:error, :not_found}
+  def get_shortned_url_by_slug(slug) do
+    case Repo.get_by(ShortnedUrl, slug: slug) do
+      nil -> {:error, :not_found}
+      shortned_url -> shortned_url
+    end
+  end
 end

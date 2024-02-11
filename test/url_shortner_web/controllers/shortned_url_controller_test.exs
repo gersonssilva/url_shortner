@@ -21,7 +21,7 @@ defmodule UrlShortnerWeb.ShortnedUrlControllerTest do
     test "renders 404 when shortned url is not found", %{conn: conn} do
       conn = get(conn, ~p"/shortned_urls/1")
 
-      assert html_response(conn, 404) =~ "Page Not Found"
+      assert html_response(conn, 404) =~ "Page Not Found\n"
     end
   end
 
@@ -44,6 +44,21 @@ defmodule UrlShortnerWeb.ShortnedUrlControllerTest do
 
       assert html_response(conn, 200) =~
                "Oops, something went wrong! Please check the errors below"
+    end
+  end
+
+  describe "redirection" do
+    test "redirects to original url", %{conn: conn} do
+      insert!(:shortned_url, original_url: "https://example.com", slug: "my-slug")
+      conn = get(conn, ~p"/my-slug")
+
+      assert redirected_to(conn, 301) == "https://example.com"
+    end
+
+    test "renders 404 when shortned url is not found", %{conn: conn} do
+      conn = get(conn, ~p"/not-found")
+
+      assert html_response(conn, 404) =~ "Page Not Found\n"
     end
   end
 end

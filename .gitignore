@@ -35,3 +35,5 @@ url_shortner-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore local app configurations
+.env

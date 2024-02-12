@@ -1,0 +1,20 @@
+<.header>
+  Shortned URLs Stats
+  <:actions>
+    <.link href={~p"/"}>
+      <.button>New Shortned URL</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<Flop.Phoenix.table items={@shortned_urls} meta={@meta} path={~p"/stats"}>
+  <:col :let={shortned_url} label="Id" field={:id}><%= shortned_url.id %></:col>
+  <:col :let={shortned_url} label="Original URL" field={:original_url}>
+    <%= shortned_url.original_url %>
+  </:col>
+  <:col :let={shortned_url} label="Total visits" field={:visits_count}>
+    <%= shortned_url.visits_count %>
+  </:col>
+</Flop.Phoenix.table>
+
+<Flop.Phoenix.cursor_pagination meta={@meta} path={~p"/stats"} />

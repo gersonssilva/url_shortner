@@ -59,7 +59,8 @@ defmodule UrlShortner.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
       {:cachex, "~> 3.6"},
-      {:liveness, "~> 1.0.0"}
+      {:liveness, "~> 1.0.0"},
+      {:flop_phoenix, "~> 0.22.6"}
     ]
   end
 

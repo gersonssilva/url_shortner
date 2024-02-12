@@ -18,6 +18,20 @@ defmodule UrlShortner.Schema.ShortnedUrl do
           updated_at: NaiveDateTime.t()
         }
 
+  @derive {
+    Flop.Schema,
+    filterable: [],
+    sortable: [:inserted_at],
+    default_order: %{
+      order_by: [:inserted_at],
+      order_directions: [:desc]
+    },
+    default_pagination_type: :first,
+    pagination_types: [:first, :last],
+    default_limit: 20,
+    max_limit: 100
+  }
+
   schema "shortned_urls" do
     field :original_url, :string
     field :slug, :string
@@ -48,6 +62,16 @@ defmodule UrlShortner.Schema.ShortnedUrl do
       {:ok, uri} -> inspect_uri(changeset, uri)
       {:error, _} -> add_error(changeset, :original_url, "is not a valid URL")
     end
+  end
+
+  @doc """
+  The function to be used to generate the cursor value for a given ShortnedUrl.
+  Must return a map with the cursor fields as keys and their values as values.
+  The cursor fields must be sortable.
+  """
+  @spec cursor_value_func(ShortnedUrl.t(), [atom()]) :: map()
+  def cursor_value_func(shortned_url, _fields) do
+    %{inserted_at: DateTime.to_string(shortned_url.inserted_at)}
   end
 
   defp inspect_uri(changeset, %URI{scheme: "http", host: host}) when not is_blank(host),

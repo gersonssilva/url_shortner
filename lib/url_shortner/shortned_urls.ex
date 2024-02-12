@@ -13,6 +13,32 @@ defmodule UrlShortner.ShortnedUrls do
     |> Repo.insert()
   end
 
+  @doc """
+  List shortned urls with optional pagination. Only cursor pagination is supported.
+  The default cursor fields are the insert time, in descencing order.
+  If no cursor is provided, the first page is returned (the most recent shortned urls).
+
+  ## Examples
+
+    list_shortned_urls()
+    #=> {:ok, {[shortned_url], meta}}
+
+    list_shortned_urls(%{after: "cursor", first: 10})
+    #=> {:ok, {[shortned_url], meta}}
+
+    list_shortned_urls(%{before: "cursor", last: 20})
+    #=> {:ok, {[shortned_url], meta}}
+  """
+  @spec list_shortned_urls(map()) ::
+          {:ok, {[ShortnedUrl.t()], Flop.Meta.t()}} | {:error, Flop.Meta.t()}
+  def list_shortned_urls(params \\ %{}) do
+    Flop.validate_and_run(ShortnedUrl, params,
+      for: ShortnedUrl,
+      repo: Repo,
+      cursor_value_func: &ShortnedUrl.cursor_value_func/2
+    )
+  end
+
   @spec get_shortned_url_by_id(String.t()) :: ShortnedUrl.t() | {:error, :not_found}
   def get_shortned_url_by_id(id) do
     case Repo.get(ShortnedUrl, id) do

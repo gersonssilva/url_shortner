@@ -17,6 +17,8 @@ defmodule UrlShortnerWeb.Router do
     get "/shortned_urls/:id", ShortnedUrlController, :show
     post "/shortned_urls", ShortnedUrlController, :create
 
+    get "/stats", StatsController, :index
+
     get "/:slug", ShortnedUrlController, :redirection, as: :redirection_url
   end
 

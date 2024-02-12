@@ -4,6 +4,8 @@ defmodule UrlShortnerWeb.ShortnedUrlControllerTest do
 
   import UrlShortner.Factory
 
+  alias UrlShortner.Repo
+
   describe "new" do
     test "renders form", %{conn: conn} do
       conn = get(conn, ~p"/")
@@ -54,6 +56,26 @@ defmodule UrlShortnerWeb.ShortnedUrlControllerTest do
       conn = get(conn, ~p"/my-slug")
 
       assert redirected_to(conn, 301) == "https://example.com"
+
+      # Small wait for the Cachex process to finish using the DB connection,
+      # avoiding error logs during tests
+      Process.sleep(100)
+    end
+
+    test "increments visits count", %{conn: conn} do
+      shortned_url = insert!(:shortned_url, original_url: "https://example.com", slug: "my-slug")
+      conn = get(conn, ~p"/my-slug")
+
+      assert redirected_to(conn, 301) == "https://example.com"
+
+      Liveness.eventually(
+        fn ->
+          assert shortned_url = Repo.reload!(shortned_url)
+          assert shortned_url.visits_count == 1
+        end,
+        250,
+        2
+      )
     end
 
     test "renders 404 when shortned url is not found", %{conn: conn} do

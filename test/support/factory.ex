@@ -5,7 +5,8 @@ defmodule UrlShortner.Factory do
   def build(:shortned_url) do
     %ShortnedUrl{
       original_url: "http://example.com",
-      slug: "my-slug"
+      slug: "my-slug",
+      visits_count: 0
     }
   end
 

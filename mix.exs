@@ -58,7 +58,8 @@ defmodule UrlShortner.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.2"},
-      {:cachex, "~> 3.6"}
+      {:cachex, "~> 3.6"},
+      {:liveness, "~> 1.0.0"}
     ]
   end
 

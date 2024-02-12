@@ -13,6 +13,7 @@ defmodule UrlShortner.Schema.ShortnedUrl do
           id: String.t(),
           original_url: String.t(),
           slug: String.t(),
+          visits_count: integer(),
           inserted_at: NaiveDateTime.t(),
           updated_at: NaiveDateTime.t()
         }
@@ -20,6 +21,7 @@ defmodule UrlShortner.Schema.ShortnedUrl do
   schema "shortned_urls" do
     field :original_url, :string
     field :slug, :string
+    field :visits_count, :integer, default: 0
 
     timestamps(type: :utc_datetime)
   end
@@ -32,6 +34,11 @@ defmodule UrlShortner.Schema.ShortnedUrl do
     |> validate_url()
     |> insert_slug()
     |> unique_constraint(:slug)
+  end
+
+  def changeset(%ShortnedUrl{} = shortned_url, attrs) do
+    shortned_url
+    |> cast(attrs, [:visits_count])
   end
 
   defp validate_url(%{valid?: false} = changeset), do: changeset

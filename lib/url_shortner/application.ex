@@ -10,6 +10,7 @@ defmodule UrlShortner.Application do
     children = [
       UrlShortnerWeb.Telemetry,
       UrlShortner.Repo,
+      {Task.Supervisor, name: UrlShortner.TaskSupervisor},
       {DNSCluster, query: Application.get_env(:url_shortner, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: UrlShortner.PubSub},
       # Start the Finch HTTP client for sending emails

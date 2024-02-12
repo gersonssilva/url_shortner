@@ -60,7 +60,8 @@ defmodule UrlShortner.MixProject do
       {:bandit, "~> 1.2"},
       {:cachex, "~> 3.6"},
       {:liveness, "~> 1.0.0"},
-      {:flop_phoenix, "~> 0.22.6"}
+      {:flop_phoenix, "~> 0.22.6"},
+      {:csv, "~> 3.2"}
     ]
   end
 

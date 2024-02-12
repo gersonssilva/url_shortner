@@ -4,6 +4,9 @@
     <.link href={~p"/"}>
       <.button>New Shortned URL</.button>
     </.link>
+    <.link href={~p"/stats/export?#{@conn.query_params}"}>
+      <.button>Download page as CSV</.button>
+    </.link>
   </:actions>
 </.header>
 

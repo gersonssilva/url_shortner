@@ -20,4 +20,17 @@ defmodule UrlShortnerWeb.StatsController do
         |> render("500.html")
     end
   end
+
+  def export(conn, params) do
+    {:ok, {shortned_urls, _meta}} = ShortnedUrls.list_shortned_urls(params)
+
+    csv =
+      shortned_urls
+      |> Stream.map(&Map.take(&1, [:id, :original_url, :visits_count]))
+      |> CSV.encode(headers: true)
+      |> Enum.to_list()
+
+    conn
+    |> send_download({:binary, csv}, filename: "shortned_urls.csv")
+  end
 end

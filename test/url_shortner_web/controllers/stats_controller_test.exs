@@ -74,4 +74,35 @@ defmodule UrlShortnerWeb.StatsControllerTest do
       assert html_response(conn, 400) =~ "Bad Request"
     end
   end
+
+  describe "export" do
+    test "exports a CSV file with the shortned urls in the current page", %{conn: conn} do
+      one_hour_ago =
+        DateTime.utc_now() |> DateTime.add(-3600, :second) |> DateTime.truncate(:second)
+
+      shortned_url_1 =
+        insert!(:shortned_url,
+          original_url: "url-1",
+          slug: "slug-1",
+          visits_count: 10,
+          inserted_at: one_hour_ago
+        )
+
+      shortned_url_2 =
+        insert!(:shortned_url, original_url: "url-2", slug: "slug-2", visits_count: 20)
+
+      {_start_cursor, end_cursor} =
+        Flop.Cursor.get_cursors(
+          [shortned_url_2],
+          [:inserted_at],
+          cursor_value_func: &ShortnedUrl.cursor_value_func/2
+        )
+
+      conn = get(conn, ~p"/stats/export?after=#{end_cursor}")
+
+      assert conn.resp_body =~ "id,original_url,visits_count"
+      assert conn.resp_body =~ "#{shortned_url_1.id},url-1,10"
+      refute conn.resp_body =~ "#{shortned_url_2.id},url-2,20"
+    end
+  end
 end

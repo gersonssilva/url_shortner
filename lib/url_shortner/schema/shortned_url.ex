@@ -9,6 +9,8 @@ defmodule UrlShortner.Schema.ShortnedUrl do
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
+  @original_url_max_length 2048
+
   @type t :: %__MODULE__{
           id: String.t(),
           original_url: String.t(),
@@ -45,6 +47,7 @@ defmodule UrlShortner.Schema.ShortnedUrl do
     %ShortnedUrl{}
     |> cast(attrs, [:original_url])
     |> validate_required([:original_url])
+    |> validate_length(:original_url, max: @original_url_max_length)
     |> validate_url()
     |> insert_slug()
     |> unique_constraint(:slug)

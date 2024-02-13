@@ -9,6 +9,11 @@ defmodule ShortnedUrl.Schema.ShortnedUrlTest do
       assert changeset.errors[:original_url] == {"can't be blank", [validation: :required]}
     end
 
+    test "is invalid when original_url is too long" do
+      changeset = ShortnedUrl.create_changeset(%{original_url: String.duplicate("a", 2049)})
+      assert changeset.errors[:original_url] == {"should be at most %{count} character(s)", [{:count, 2048}, {:validation, :length}, {:kind, :max}, {:type, :string}]}
+    end
+
     test "is invalid when original_url is not a valid URL" do
       invalid_urls = [
         "not a url",

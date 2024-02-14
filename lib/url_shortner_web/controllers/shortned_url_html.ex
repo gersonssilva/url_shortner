@@ -21,8 +21,8 @@ defmodule UrlShortnerWeb.ShortnedUrlHTML do
     assigns = assign(assigns, :url, UrlShortnerWeb.Endpoint.url() <> "/" <> assigns.slug)
 
     ~H"""
-    <div>
-      <.link href={@url}><%= @url %></.link>
+    <div class="mt-5">
+      <.link href={@url} class="text-blue-500 font-semibold"><%= @url %></.link>
     </div>
     """
   end

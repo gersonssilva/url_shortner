@@ -3,8 +3,8 @@ defmodule UrlShortner.ShortnedUrls do
   Context module for shortned urls.
   """
 
-  alias UrlShortner.Schema.ShortnedUrl
   alias UrlShortner.Repo
+  alias UrlShortner.Schema.ShortnedUrl
 
   @spec create_shortned_url(map) :: {:ok, ShortnedUrl.t()} | {:error, Ecto.Changeset.t()}
   def create_shortned_url(attrs) do

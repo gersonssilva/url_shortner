@@ -4,9 +4,10 @@ defmodule UrlShortnerWeb.StatsController do
   alias UrlShortner.ShortnedUrls
 
   def index(conn, params) do
-    with {:ok, {shortned_urls, meta}} <- ShortnedUrls.list_shortned_urls(params) do
-      render(conn, "index.html", shortned_urls: shortned_urls, meta: meta)
-    else
+    case ShortnedUrls.list_shortned_urls(params) do
+      {:ok, {shortned_urls, meta}} ->
+        render(conn, "index.html", shortned_urls: shortned_urls, meta: meta)
+
       {:error, %Flop.Meta{errors: errors}} when not is_nil(errors) ->
         conn
         |> put_view(UrlShortnerWeb.ErrorHTML)

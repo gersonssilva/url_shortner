@@ -16,6 +16,7 @@ defmodule UrlShortnerWeb.ShortnedUrlHTML do
   """
 
   attr :slug, :string, required: true
+  slot :inner_block, required: false
 
   def shortned_link(assigns) do
     assigns = assign(assigns, :url, UrlShortnerWeb.Endpoint.url() <> "/" <> assigns.slug)

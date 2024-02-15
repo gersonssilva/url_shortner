@@ -1,4 +1,8 @@
 defmodule UrlShortner.Schema.ShortnedUrl do
+  @moduledoc """
+  The schema for the `shortned_urls` table.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -16,8 +20,8 @@ defmodule UrlShortner.Schema.ShortnedUrl do
           original_url: String.t(),
           slug: String.t(),
           visits_count: integer(),
-          inserted_at: NaiveDateTime.t(),
-          updated_at: NaiveDateTime.t()
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
         }
 
   @derive {

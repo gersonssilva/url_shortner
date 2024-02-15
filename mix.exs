@@ -37,9 +37,7 @@ defmodule UrlShortner.MixProject do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.0"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.20.2"},
-      {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
@@ -61,7 +59,13 @@ defmodule UrlShortner.MixProject do
       {:cachex, "~> 3.6"},
       {:liveness, "~> 1.0.0"},
       {:flop_phoenix, "~> 0.22.6"},
-      {:csv, "~> 3.2"}
+      {:csv, "~> 3.2"},
+
+      ### Dev and Test dependencies
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:floki, ">= 0.30.0", only: :test},
+      {:phoenix_live_reload, "~> 1.2", only: :dev}
     ]
   end
 

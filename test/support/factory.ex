@@ -1,4 +1,6 @@
 defmodule UrlShortner.Factory do
+  @moduledoc false
+
   alias UrlShortner.Repo
   alias UrlShortner.Schema.ShortnedUrl
 

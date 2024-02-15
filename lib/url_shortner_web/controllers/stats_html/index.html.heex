@@ -9,7 +9,15 @@
 
 <div class="mt-20 grid grid-cols-5">
   <div class="col-start-2 col-span-3">
-    <Flop.Phoenix.table opts={[table_attrs: [class: "w-full border border-slate-400"], tbody_tr_attrs: [class: "mb-5"]]} items={@shortned_urls} meta={@meta} path={~p"/stats"}>
+    <Flop.Phoenix.table
+      opts={[
+        table_attrs: [class: "w-full border border-slate-400"],
+        tbody_tr_attrs: [class: "mb-5"]
+      ]}
+      items={@shortned_urls}
+      meta={@meta}
+      path={~p"/stats"}
+    >
       <:col :let={shortned_url} label="Id" field={:id}><%= shortned_url.id %></:col>
       <:col :let={shortned_url} label="Original URL" field={:original_url}>
         <%= shortned_url.original_url %>
@@ -24,4 +32,3 @@
     <Flop.Phoenix.cursor_pagination meta={@meta} path={~p"/stats"} />
   </div>
 </div>
-

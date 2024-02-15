@@ -19,7 +19,15 @@ defmodule UrlShortnerWeb.ShortnedUrlHTML do
   slot :inner_block, required: false
 
   def shortned_link(assigns) do
-    assigns = assign(assigns, :url, UrlShortnerWeb.Endpoint.url() <> "/" <> assigns.slug)
+    url =
+      [
+        UrlShortnerWeb.Endpoint.url(),
+        "/",
+        assigns.slug
+      ]
+      |> Enum.join("")
+
+    assigns = assign(assigns, :url, url)
 
     ~H"""
     <div class="mt-5">

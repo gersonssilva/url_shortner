@@ -2,4 +2,6 @@
 set -eu
 
 cd -P -- "$(dirname -- "$0")"
+
+./url_shortner eval UrlShortner.Release.migrate
 PHX_SERVER=true exec ./url_shortner start

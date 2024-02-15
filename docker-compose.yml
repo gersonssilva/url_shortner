@@ -7,6 +7,8 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
+    depends_on:
+      - db
 
   db:
     image: postgres:16.1
@@ -14,6 +16,7 @@ services:
     environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: postgres
+        POSTGRES_DB: ${DATABASE_NAME}
     ports:
       - "5432:5432"
     volumes:

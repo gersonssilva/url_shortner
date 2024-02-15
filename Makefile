@@ -3,12 +3,15 @@ ifneq (,$(wildcard ./.env))
     export
 endif
 
-.PHONY: console server test
+.PHONY: console setup-db server test
 
 console:
 	iex -S mix
 
-server:
+setup-db:
+	mix ecto.setup
+
+server: setup-db
 	iex -S mix phx.server
 
 test:
